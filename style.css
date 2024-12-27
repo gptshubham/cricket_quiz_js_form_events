@@ -37,7 +37,6 @@ input {
 }
 
 #start-btn {
-  background-color: #fff;
   position: fixed;
   bottom: 50%;
   left: 30%;
@@ -47,9 +46,14 @@ input {
   border-radius: 10px;
   font-size: 2rem;
   font-weight: bold;
-  color: chartreuse;
-  background-color: blue;
+  color: rgb(38, 119, 44);
+  background-color: rgb(180, 180, 201);
   box-shadow: 0 0 8px rgba(0, 0, 0, 1);
+}
+
+#reset-btn {
+  width: 100px;
+  background-color: rgb(175, 175, 183);
 }
 
 button {
