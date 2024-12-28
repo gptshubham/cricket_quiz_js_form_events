@@ -24,7 +24,8 @@ h1 {
 }
 
 input {
-  vertical-align: text-top;
+  vertical-align: baseline;
+  margin: 0;
   margin-left: 30px;
   margin-right: 5px;
 }
@@ -34,9 +35,8 @@ input {
 }
 
 .question {
-  display: block;
   font-weight: bold;
-  padding: 20px 0 5px;
+  margin-bottom: 5px;
 }
 
 #start-btn {
@@ -50,22 +50,29 @@ input {
   font-size: 2rem;
   font-weight: bold;
   color: rgb(38, 119, 44);
-  background-color: #f1f2f3;
+  background-color: #aaa;
   box-shadow: 0 0 8px rgba(0, 0, 0, 1);
   cursor: pointer;
 }
 
+#start-btn:hover {
+  background-color: #ddd;
+}
+
 #reset-btn {
   width: 100px;
-  background-color: #ddd;
+  background-color: #aaa;
   color: #333;
+}
+#reset-btn:hover {
+  background-color: #ccc;
 }
 
 button {
   padding: 10px;
   font-weight: 600;
   font-size: 18px;
-  background-color: rgb(39, 150, 39);
+  background-color: rgb(27, 151, 27);
   color: #f9f9f9;
   border-radius: 5px;
   border: none;
@@ -74,8 +81,8 @@ button {
   cursor: pointer;
 }
 
-span {
-  display: block;
+button[type='submit']:hover {
+  background-color: rgb(27, 210, 27);
 }
 
 .hidden {

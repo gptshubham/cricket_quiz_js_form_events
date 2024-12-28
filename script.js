@@ -1,14 +1,8 @@
 // Selecting Elements
+const start = document.querySelector('#start-btn');
 const form = document.querySelector('form');
 
-const start = document.querySelector('#start-btn');
-const input = document.querySelectorAll('input');
-const questions = document.querySelectorAll('.question');
-const submitButton = document.querySelector('[type="submit"]');
 const scoreContainer = document.querySelector('.score-container');
-const resetButton = document.querySelector('#reset-btn');
-
-// console.log(questions);
 
 // object containing the quiz questions , options and the correct option
 
@@ -310,10 +304,10 @@ const cricQuiz = [
   },
 ];
 
-// Event Listener for the start button
-const container = document.querySelector('.quiz-container');
+// an empty object to contain correct options
+const correctAnswers = {};
 
-// start button functionality
+// Event Listener for the start button
 start.addEventListener('click', () => {
   // hiding the start button on click
   start.classList.add('hidden');
@@ -321,51 +315,73 @@ start.addEventListener('click', () => {
   // displaying the form content on the screen
   form.classList.remove('hidden');
 
-  // displaying the submit button the screen
-  submitButton.classList.remove('hidden');
-
-  // displaying the reset button on the screen
-  resetButton.classList.remove('hidden');
-
-  load_questions();
+  load_quiz();
+  create_buttons();
 });
 
+// creating form elements
+
 // A function that generates the quiz content and loads it on the screen
-const load_questions = () => {
+const load_quiz = () => {
+  // clearing existing form content
+  form.innerHTML = '';
+
   // an array that stores the randomly generated indices
   const indices = getIndices();
   // console.log(keys);
 
-  // Generating quiz content: 5 questions with 4 optons each
-  for (let i = 0; i < 5; i++) {
-    // iterating over indices array for index positions
-    const index = indices[i];
+  // Generating quiz content: 5 questions with 4 options each
+
+  indices.forEach((index, i) => {
+    // Creating Elements
+    const question_contianer = document.createElement('div');
+    question_contianer.className = 'question-contianer';
+
+    form.appendChild(question_contianer);
+
+    const question = document.createElement('p');
+    question.className = 'question';
+
+    question_contianer.appendChild(question);
+
     // question of the quiz
-    questions[i].innerHTML = `${i + 1}. ${cricQuiz[index].q}`;
+    question.innerHTML = `${i + 1}. ${cricQuiz[index].q}`;
 
-    // selecting all labels of each input element
-    const options = document.querySelectorAll(`.q${i + 1}`);
-    // console.log(options);
-
-    // selecting input elements to set their attribute values
-    const inputs = document.querySelectorAll(`.input${i + 1}`);
+    // storing correct options in correctAnswers object
+    correctAnswers[`q${i + 1}`] = cricQuiz[index].ans;
 
     // options for the quiz question
-    for (let i = 0; i < 4; i++) {
+    cricQuiz[index].ops.forEach((option, j) => {
+      const option_container = document.createElement('div');
+      option_container.className = 'option-container';
+
+      question_contianer.appendChild(option_container);
+
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.id = `q${i + 1}o${j + 1}`;
+      input.name = `q${i + 1}`;
+      input.value = option;
+
+      const input_label = document.createElement('label');
+      input_label.setAttribute('for', `q${i + 1}o${j + 1}`);
+
+      option_container.appendChild(input);
+      option_container.appendChild(input_label);
+
       // adding text content of the labes elements for each input element
-      options[i].innerHTML = cricQuiz[index].ops[i];
+      input_label.innerHTML = cricQuiz[index].ops[j];
       // updating the value attributes of input elements
-      inputs[i].value = cricQuiz[index].ops[i];
-      // updating name attributes of each input element
-      inputs[i].name = index;
-    }
-  }
+      input.value = cricQuiz[index].ops[j];
+    });
+  });
 };
 
-// function to generate 5 unique index positions to select 5 unique questions
+// function to generate 5 unique index positions to select 5 unique questions using set
+
 const getIndices = () => {
   let indices = new Set();
-  // let's add inner text to labels to frame the dynamic quiz
+
   while (indices.size != 5) {
     const index = Math.floor(Math.random() * 50);
     indices.add(index);
@@ -373,7 +389,34 @@ const getIndices = () => {
   return [...indices];
 };
 
-// now let's create that submit event to display the score on the screen
+const create_buttons = () => {
+  const button_container = document.createElement('div');
+  button_container.id = 'button-container';
+
+  form.appendChild(button_container);
+
+  const submitButton = document.createElement('button');
+  submitButton.type = 'submit';
+  submitButton.textContent = 'Submit';
+
+  button_container.appendChild(submitButton);
+
+  const resetButton = document.createElement('button');
+  resetButton.type = 'reset';
+  resetButton.id = 'reset-btn';
+  resetButton.textContent = 'Reset';
+
+  button_container.appendChild(resetButton);
+
+  // adding reset button functionality
+  resetButton.addEventListener('click', () => {
+    load_quiz();
+    create_buttons();
+    scoreContainer.classList.add('hidden');
+  });
+};
+
+// creating submit event to display the score on the screen
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -384,16 +427,10 @@ form.addEventListener('submit', (e) => {
   let score = 0;
   for (let [key, value] of data.entries()) {
     // console.log(key, value);
-    if (value === cricQuiz[key].ans) {
+    if (value === correctAnswers[key]) {
       score++;
     }
   }
   // console.log(score);
   scoreContainer.innerHTML = `Score: ${score}/5`;
-});
-
-// adding reset button functionality
-resetButton.addEventListener('click', () => {
-  load_questions();
-  scoreContainer.classList.add('hidden');
 });
