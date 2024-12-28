@@ -334,15 +334,15 @@ const load_quiz = () => {
 
   indices.forEach((index, i) => {
     // Creating Elements
-    const question_contianer = document.createElement('div');
-    question_contianer.className = 'question-contianer';
+    const question_container = document.createElement('div');
+    question_container.className = 'question-container';
 
-    form.appendChild(question_contianer);
+    form.appendChild(question_container);
 
     const question = document.createElement('p');
     question.className = 'question';
 
-    question_contianer.appendChild(question);
+    question_container.appendChild(question);
 
     // question of the quiz
     question.innerHTML = `${i + 1}. ${cricQuiz[index].q}`;
@@ -355,7 +355,7 @@ const load_quiz = () => {
       const option_container = document.createElement('div');
       option_container.className = 'option-container';
 
-      question_contianer.appendChild(option_container);
+      question_container.appendChild(option_container);
 
       const input = document.createElement('input');
       input.type = 'radio';
