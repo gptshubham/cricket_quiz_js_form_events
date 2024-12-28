@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #f9f9f9;
+  background-color: #f0f2f5;
   font-family: helvetica, sans-serif;
 }
 
@@ -24,16 +24,19 @@ h1 {
 }
 
 input {
-  vertical-align: top;
+  vertical-align: text-top;
   margin-left: 30px;
-  margin-right: 10px;
-  visibility: hidden;
+  margin-right: 5px;
+}
+
+.option-container {
+  margin-bottom: 5px;
 }
 
 .question {
   display: block;
   font-weight: bold;
-  padding: 20px 0;
+  padding: 20px 0 5px;
 }
 
 #start-btn {
@@ -47,13 +50,15 @@ input {
   font-size: 2rem;
   font-weight: bold;
   color: rgb(38, 119, 44);
-  background-color: rgb(180, 180, 201);
+  background-color: #f1f2f3;
   box-shadow: 0 0 8px rgba(0, 0, 0, 1);
+  cursor: pointer;
 }
 
 #reset-btn {
   width: 100px;
-  background-color: rgb(175, 175, 183);
+  background-color: #ddd;
+  color: #333;
 }
 
 button {
@@ -66,9 +71,18 @@ button {
   border: none;
   margin: 20px 0;
   width: 100%;
-  visibility: hidden;
+  cursor: pointer;
 }
 
 span {
   display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+#button-container {
+  display: flex;
+  gap: 10px;
 }
