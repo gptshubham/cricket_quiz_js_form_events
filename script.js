@@ -245,7 +245,7 @@ const cricQuiz = [
   {
     q: 'What is the maximum number of runs a batsman can score off a single legal delivery?',
     ops: ['4', '6', '7', '8'],
-    ans: '8',
+    ans: '6',
   },
   {
     q: 'Who has bowled the fastest delivery in cricket history (161.3 km/h)?',
@@ -327,12 +327,12 @@ const load_quiz = () => {
   form.innerHTML = '';
 
   // an array that stores the randomly generated indices
-  const indices = getIndices();
+  const questions = getIndices();
   // console.log(keys);
 
   // Generating quiz content: 5 questions with 4 options each
 
-  indices.forEach((index, i) => {
+  questions.forEach((qsn, i) => {
     // Creating Elements
     const question_container = document.createElement('div');
     question_container.className = 'question-container';
@@ -345,13 +345,13 @@ const load_quiz = () => {
     question_container.appendChild(question);
 
     // question of the quiz
-    question.innerHTML = `${i + 1}. ${cricQuiz[index].q}`;
+    question.innerHTML = `${i + 1}. ${qsn.q}`;
 
     // storing correct options in correctAnswers object
-    correctAnswers[`q${i + 1}`] = cricQuiz[index].ans;
+    correctAnswers[`q${i + 1}`] = qsn.ans;
 
     // options for the quiz question
-    cricQuiz[index].ops.forEach((option, j) => {
+    qsn.ops.forEach((option, j) => {
       const option_container = document.createElement('div');
       option_container.className = 'option-container';
 
@@ -370,9 +370,9 @@ const load_quiz = () => {
       option_container.appendChild(input_label);
 
       // adding text content of the labes elements for each input element
-      input_label.innerHTML = cricQuiz[index].ops[j];
+      input_label.innerHTML = qsn.ops[j];
       // updating the value attributes of input elements
-      input.value = cricQuiz[index].ops[j];
+      input.value = qsn.ops[j];
     });
   });
 };
@@ -380,6 +380,7 @@ const load_quiz = () => {
 // function to generate 5 unique index positions to select 5 unique questions using set
 
 const getIndices = () => {
+  /*
   let indices = new Set();
 
   while (indices.size != 5) {
@@ -387,6 +388,14 @@ const getIndices = () => {
     indices.add(index);
   }
   return [...indices];
+  */
+
+  // optimizing above operation
+
+  cricQuiz.sort((a, b) => Math.random() - 0.5);
+  // we don't have any use of a,b parameters, we can simply abvoid them altogether
+
+  return cricQuiz.slice(0, 5);
 };
 
 const create_buttons = () => {
