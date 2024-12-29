@@ -327,7 +327,7 @@ const load_quiz = () => {
   form.innerHTML = '';
 
   // an array that stores the randomly generated indices
-  const questions = getIndices();
+  const questions = getQuestions();
   // console.log(keys);
 
   // Generating quiz content: 5 questions with 4 options each
@@ -379,7 +379,7 @@ const load_quiz = () => {
 
 // function to generate 5 unique index positions to select 5 unique questions using set
 
-const getIndices = () => {
+const getQuestions = () => {
   /*
   let indices = new Set();
 
@@ -389,13 +389,31 @@ const getIndices = () => {
   }
   return [...indices];
   */
-
   // optimizing above operation
-
+  /*
   cricQuiz.sort((a, b) => Math.random() - 0.5);
   // we don't have any use of a,b parameters, we can simply abvoid them altogether
 
   return cricQuiz.slice(0, 5);
+  */
+  // further optimizing the code for better performance
+
+  const arr = [];
+  let length = cricQuiz.length;
+
+  for (let i = 0; i < 5; i++) {
+    const index = Math.floor(Math.random() * length);
+    arr.push(cricQuiz[index]);
+
+    // swap
+    [cricQuiz[index], cricQuiz[length - 1]] = [
+      cricQuiz[length - 1],
+      cricQuiz[index],
+    ];
+    length--;
+  }
+
+  return arr;
 };
 
 const create_buttons = () => {
